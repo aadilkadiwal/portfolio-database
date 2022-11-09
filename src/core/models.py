@@ -1,0 +1,20 @@
+from django.db import models
+from uuid import uuid4
+
+
+class AbstractTrack(models.Model):
+    uuid = models.UUIDField(unique=True, default=uuid4, editable=False)
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        abstract = True
+
+class User(AbstractTrack):
+    first_name = models.CharField(max_length=55)
+    surname = models.CharField(max_length=55)
+    designation = models.CharField(max_length=55, null=True, blank=True)
+    photo = models.ImageField(upload_to="profile/", null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.first_name} | {self.surname}" 
