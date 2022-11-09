@@ -25,7 +25,7 @@ class Language(AbstractTrack):
         STAR_5 = "STAR_5"
 
     name = models.CharField(max_length=20)
-    rating = models.Choices(choices=Rating.choices, default=Rating.STAR_1, max_length=6)
+    rating = models.CharField(choices=Rating.choices, default=Rating.STAR_1, max_length=6)
 
     def __str__(self):
         return f"{self.name} | {self.rating}"
@@ -44,8 +44,8 @@ class Skill(AbstractTrack):
         EXPERT = 'EXPERT'
 
     name = models.CharField(max_length=55)
-    skill_type = models.Choices(choices=SkillType.choices, default=SkillType.CODE_SKILL, max_length=18)
-    status = models.Choices(choices=Status.choices, default=Status.BEGINNER, max_length=12)
+    skill_type = models.CharField(choices=SkillType.choices, default=SkillType.CODE_SKILL, max_length=18)
+    status = models.CharField(choices=Status.choices, default=Status.BEGINNER, max_length=12)
 
     def __str__(self):
         return f"{self.name} | {self.status}"
@@ -74,7 +74,7 @@ class Experience(AbstractTrack):
 
 class Education(AbstractTrack):
     degree = models.CharField(max_length=100)
-    course_name = models.CharField(max_lenght=155)
+    course_name = models.CharField(max_length=155)
     university = models.CharField(max_length=155)
     start_date = models.DateField()
     end_date = models.DateField()
