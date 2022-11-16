@@ -5,19 +5,6 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from core.models import AbstractTrack
 
 
-class About(AbstractTrack):
-    description = models.CharField(max_length=255, null=True, blank=True)
-
-
-class Bio(AbstractTrack):
-    dob = models.DateField()
-    email = models.EmailField()
-    city = models.CharField(max_length=30)
-
-    def __str__(self):
-        return f"{self.dob} | {self.email} | {self.city}"
-
-
 class Language(AbstractTrack):
 
     name = models.CharField(max_length=20)

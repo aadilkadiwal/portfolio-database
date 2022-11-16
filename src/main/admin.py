@@ -1,24 +1,12 @@
 from django.contrib import admin
 
 from .models import (
-    About,
-    Bio,
     Language,
     Skill,
     Project,
     Experience,
     Education
 )
-
-
-@admin.register(About)
-class AboutAdmin(admin.ModelAdmin):
-    list_display = [field.name for field in About._meta.fields]
-
-
-@admin.register(Bio)
-class BioAdmin(admin.ModelAdmin):
-    list_display = [field.name for field in Bio._meta.fields]
 
 
 @admin.register(Language)
