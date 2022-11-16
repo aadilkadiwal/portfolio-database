@@ -1,4 +1,6 @@
 from django.db import models
+from decimal import Decimal
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 from core.models import AbstractTrack
 
@@ -17,15 +19,15 @@ class Bio(AbstractTrack):
 
 
 class Language(AbstractTrack):
-    class Rating(models.TextChoices):
-        STAR_1 = "STAR_1"
-        STAR_2 = "STAR_2"
-        STAR_3 = "STAR_3"
-        STAR_4 = "STAR_4"
-        STAR_5 = "STAR_5"
 
     name = models.CharField(max_length=20)
-    rating = models.CharField(choices=Rating.choices, default=Rating.STAR_1, max_length=6)
+    rating = models.DecimalField(
+        max_digits=3,
+        decimal_places=0,
+        default=Decimal(0),
+        validators=[MinValueValidator(0), MaxValueValidator(100)]
+    )
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         return f"{self.name} | {self.rating}"
@@ -37,18 +39,18 @@ class Skill(AbstractTrack):
         SOFTWARE_SKILL = 'SOFTWARE_SKILL'
         CODE_SKILL = 'CODE_SKILL'
 
-    class Status(models.TextChoices):
-        BEGINNER = 'BEGINNER'
-        INTERMEDIATE = 'INTERMEDIATE'
-        ADVANCE = 'ADVANCE'
-        EXPERT = 'EXPERT'
-
     name = models.CharField(max_length=55)
     skill_type = models.CharField(choices=SkillType.choices, default=SkillType.CODE_SKILL, max_length=18)
-    status = models.CharField(choices=Status.choices, default=Status.BEGINNER, max_length=12)
+    rating = models.DecimalField(
+        max_digits=3,
+        decimal_places=0,
+        default=Decimal(0),
+        validators=[MinValueValidator(0), MaxValueValidator(100)]
+    )
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
-        return f"{self.name} | {self.status}"
+        return f"{self.name} | {self.rating}"
 
     
 class Project(AbstractTrack):
@@ -56,6 +58,7 @@ class Project(AbstractTrack):
     description = models.CharField(max_length=155)
     image = models.ImageField(upload_to='project/')
     url = models.URLField()
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         return f"{self.name} | {self.url}"
@@ -67,6 +70,7 @@ class Experience(AbstractTrack):
     description = models.CharField(max_length=255)
     start_date = models.DateField()
     end_date = models.DateField()
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         return f"{self.company_name} | {self.designation}"
@@ -78,6 +82,7 @@ class Education(AbstractTrack):
     university = models.CharField(max_length=155)
     start_date = models.DateField()
     end_date = models.DateField()
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         return f"{self.degree} | {self.course_name}"
